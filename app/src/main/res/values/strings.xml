@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">Report Demo</string>
+
+    <string name="gen_cancel">取消</string>
+    <string name="gen_close">關閉</string>
+    <string name="gen_done">完成</string>
+    <string name="gen_exit2">離開</string>
+    <string name="gen_exit">請再按一次返回鍵離開</string>
+    <string name="gen_loading">讀取中…</string>
+    <string name="gen_ok">OK</string>
+    <string name="gen_continue">繼續</string>
+    <string name="gen_giveup">放棄</string>
+    <string name="gen_open">開啟</string>
+    <string name="gen_other">其他</string>
+    <string name="gen_save">儲存</string>
+    <string name="gen_show_all">顯示全部</string>
+    <string name="gen_show_partial">顯示部分</string>
+    <string name="gen_total">總和</string>
+    <string name="gen_warning">警告</string>
+    <string name="gen_or">或</string>
+    <string name="gen_confirm">確定</string>
+
+    <string name="err_name_empty">請輸入姓名。</string>
+    <string name="err_name_length">名稱請在%1$d字元內。</string>
+    <string name="err_network_failed_title">網路錯誤</string>
+    <string name="err_network_failed">偵測不到網路。</string>
+    <string name="err_network_failed_tip">請檢察網路狀態。</string>
+    <string name="err_phone_empty">請輸入電話號碼。</string>
+    <string name="err_phone_invalid">請輸入有效的電話號碼。</string>
+    <string name="err_account_empty">請輸入帳號。</string>
+    <string name="err_account_invalid">帳號請勿輸入特殊字元。</string>
+    <string name="err_account_length">帳號請在%1$d至%2$d字元之間。</string>
+    <string name="err_password_empty">請輸入密碼。</string>
+    <string name="err_password_invalid">密碼請勿輸入特殊字元。</string>
+    <string name="err_password_format_error">密碼格式錯誤</string>
+    <string name="err_password_length">密碼請在%1$d至%2$d字元之間。</string>
+    <string name="err_password_check">2次密碼不符。</string>
+    <string name="err_mail_empty">請輸入Email。</string>
+</resources>

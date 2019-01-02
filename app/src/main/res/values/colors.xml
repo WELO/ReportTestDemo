@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="color_text_primary">#343434</color>
+    <color name="color_text_secondary">#FFFFFF</color>
+    <color name="color_text_desc">#878C8F</color>
+    <color name="color_text_title">#f9951b</color>
+    <color name="color_text_warn">#A31621</color>
+    <color name="color_accent">#f9951b</color>
+    <color name="color_unselected">#BFC8C5</color>
+    <color name="color_toolbar">#f9951b</color>
+    <color name="color_botton_menu">#f9951b</color>
+    <color name="color_status">#343434</color>
+    <color name="color_background_primary">#FFFFFF</color>
+    <color name="color_background_secondary">#FFFFFF</color>
+    <color name="color_background_origin">#FAFAFA</color>
+    <color name="color_background_block">#000000</color>
+    <color name="color_progress">#AFD4FF</color>
+    <color name="color_progress_background">#B8B8B8</color>
+    <color name="color_split">#3F7CAC</color>
+    <color name="color_split_white">#FFFFFF</color>
+    <color name="color_selected">#A31621</color>
+    <color name="color_tab_background">#00BEB7</color>
+    <color name="color_tab_indicator">#00FFFFFF</color>
+    <color name="color_tab_select">#f9951b</color>
+</resources>
