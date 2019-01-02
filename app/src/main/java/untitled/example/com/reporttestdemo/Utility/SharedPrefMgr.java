@@ -7,9 +7,6 @@ import android.os.Bundle;
 import java.util.Iterator;
 import java.util.Map;
 
-/**
- * Created by Amber_Chen on 2018/10/1.
- */
 
 public class SharedPrefMgr {
     /**

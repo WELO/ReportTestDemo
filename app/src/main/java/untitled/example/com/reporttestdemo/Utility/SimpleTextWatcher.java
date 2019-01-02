@@ -3,9 +3,6 @@ package untitled.example.com.reporttestdemo.Utility;
 import android.text.Editable;
 import android.text.TextWatcher;
 
-/**
- * Created by Amber_Chen on 2018/10/2.
- */
 
 public abstract class SimpleTextWatcher implements TextWatcher {
 

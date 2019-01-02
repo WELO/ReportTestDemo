@@ -6,9 +6,9 @@ package untitled.example.com.reporttestdemo.domain.model;
 
 public class Report {
 
-    long id;
-    String title;
-    String content;
+    private long id;
+    private String title;
+    private String content;
 
     private Report(Builder builder) {
         id = builder.id;
