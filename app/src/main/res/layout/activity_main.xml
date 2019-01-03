@@ -3,7 +3,9 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+                name="mainViewModel"
+                type="untitled.example.com.reporttestdemo.presentation.MainViewModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -39,7 +41,8 @@
                 android:layout_margin="@dimen/space_third"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:onClick="newReport"/>
+                android:onClick="newReport"
+                android:src="@drawable/ic_add_black_24dp"/>
 
     </android.support.constraint.ConstraintLayout>
 </layout>

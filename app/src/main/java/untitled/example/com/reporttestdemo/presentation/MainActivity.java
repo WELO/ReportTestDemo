@@ -1,7 +1,13 @@
 package untitled.example.com.reporttestdemo.presentation;
 
+import android.annotation.SuppressLint;
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,12 +17,17 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 import untitled.example.com.reporttestdemo.R;
 import untitled.example.com.reporttestdemo.Utility.BaseActivity;
 import untitled.example.com.reporttestdemo.Utility.Define;
-import untitled.example.com.reporttestdemo.domain.executor.ReportManager;
-import untitled.example.com.reporttestdemo.domain.model.Report;
+import untitled.example.com.reporttestdemo.databinding.ActivityMainBinding;
+import untitled.example.com.reporttestdemo.domain.repository.ReportDb;
+import untitled.example.com.reporttestdemo.domain.repository.entity.Report;
+import untitled.example.com.reporttestdemo.domain.repository.imp.ReportRepositoryImp;
 
 public class MainActivity extends BaseActivity {
 
@@ -25,24 +36,38 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.fab)
     FloatingActionButton fab;
 
-    ReportManager reportManager;
     Disposable disposable;
     ReportAdapter adapter;
+    MainViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        ActivityMainBinding binding = DataBindingUtil
+                .setContentView(this, R.layout.activity_main);
+        ButterKnife.bind(this, binding.getRoot());
+        viewModel = ViewModelProviders.of(this, new ViewModelProvider.Factory() {
+            @NonNull
+            @Override
+            public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+                return (T) new MainViewModel(new ReportRepositoryImp(ReportDb.getReportDao()));
+            }
+        }).get(MainViewModel.class);
+        binding.setMainViewModel(viewModel);
+        binding.setLifecycleOwner(this);
+
         initView();
     }
 
     private void initView() {
-        reportManager = ReportManager.getInstance();
         rvReport.setLayoutManager(new LinearLayoutManager(context));
-        disposable = reportManager.getReportList().subscribe(reportList -> {
-            refreshReportList(reportList);
-        }, Throwable::printStackTrace);
+        disposable = viewModel.getReportList()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(reportList -> {
+                    Timber.d("getReportList success");
+                    refreshReportList(reportList);
+                }, Throwable::printStackTrace);
 
     }
 
@@ -55,6 +80,16 @@ public class MainActivity extends BaseActivity {
                 Intent intent = new Intent(context, EditActivity.class);
                 intent.putExtra(Define.INTENT_PARAM_EDIT_ID, report.getId());
                 startActivity(intent);
+            }
+
+            @SuppressLint("CheckResult")
+            @Override
+            public void onDelete(Report report) {
+                viewModel.deleteReport(report).subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(() -> {
+                            Timber.d("deleteReport success");
+                        }, Throwable::printStackTrace);
             }
         });
     }

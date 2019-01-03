@@ -6,7 +6,7 @@ import java.util.List;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.processors.PublishProcessor;
-import untitled.example.com.reporttestdemo.domain.model.Report;
+import untitled.example.com.reporttestdemo.domain.repository.entity.Report;
 
 /**
  * Created by Amy on 2019/1/2

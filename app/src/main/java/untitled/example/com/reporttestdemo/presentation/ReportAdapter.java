@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import untitled.example.com.reporttestdemo.R;
 import untitled.example.com.reporttestdemo.databinding.ItemReportBinding;
-import untitled.example.com.reporttestdemo.domain.model.Report;
+import untitled.example.com.reporttestdemo.domain.repository.entity.Report;
 
 /**
  * Created by Amy on 2019/1/2
@@ -32,6 +32,8 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
 
     interface onItemClickListioner{
         void onClick(Report report);
+
+        void onDelete(Report report);
     }
 
     public ReportAdapter(List<Report> reports) {
@@ -73,12 +75,17 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
             binding.setReport(report);
             this.report = report;
         }
-        @OnClick({R.id.view_item})
+        @OnClick({R.id.view_item,R.id.btn_delete})
         public void onViewClicked(View view) {
             switch (view.getId()) {
                 case R.id.view_item:
                     if(mOnItemClickListioner!=null){
                         mOnItemClickListioner.onClick(report);
+                    }
+                    break;
+                case R.id.btn_delete:
+                    if (mOnItemClickListioner != null) {
+                        mOnItemClickListioner.onDelete(report);
                     }
                     break;
             }

@@ -1,14 +1,21 @@
-package untitled.example.com.reporttestdemo.domain.model;
+package untitled.example.com.reporttestdemo.domain.repository.entity;
+
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 
 /**
  * Created by Amy on 2019/1/2
  */
-
+@Entity
 public class Report {
 
+    @PrimaryKey
     private long id;
     private String title;
     private String content;
+
+    public Report() {
+    }
 
     private Report(Builder builder) {
         id = builder.id;
@@ -48,6 +55,18 @@ public class Report {
         }
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     public long getId() {
         return id;
     }
@@ -58,5 +77,10 @@ public class Report {
 
     public String getContent() {
         return content;
+    }
+
+    @Override
+    public String toString() {
+        return "Report {id = " + id + ", title = " + title + ", content = " + content + " } ";
     }
 }
