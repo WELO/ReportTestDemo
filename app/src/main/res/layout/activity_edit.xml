@@ -29,7 +29,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:text="@={editViewModel.title}"/>
+                android:text="@={editViewModel.title}"
+                android:selection="@{editViewModel.titleSelection}"/>
 
         <TextView
                 android:id="@+id/tv_content"
@@ -47,7 +48,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:text="@={editViewModel.content}"/>
+                android:text="@={editViewModel.content}"
+                android:selection="@{editViewModel.contentSelection}"/>
 
         <Button
                 android:layout_width="wrap_content"

@@ -1,15 +1,19 @@
 package untitled.example.com.reporttestdemo.presentation;
 
 import android.annotation.SuppressLint;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -30,6 +34,8 @@ public class EditActivity extends BaseActivity {
     EditViewModel viewModel;
     long initReportId = 0;
 
+    @BindView(R.id.et_content)
+    EditText etContent;
 
     @SuppressLint("CheckResult")
     @Override
@@ -58,30 +64,41 @@ public class EditActivity extends BaseActivity {
                         }, Throwable::printStackTrace);
             }
         }
+
+        viewModel.content.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String content) {
+                if (content.startsWith(" ") || content.endsWith(" ")) {
+                    content = content.trim();
+                    viewModel.content.setValue(content);
+                    viewModel.contentSelection.setValue(content.length());
+                }
+            }
+        });
     }
 
     @SuppressLint("CheckResult")
     public void sendAndSaveReport(View view) {
-        isValidInput().flatMapCompletable(isValid -> {
-            Report newReport = Report.newBuilder()
-                    .setId(initReportId != 0 ? initReportId : System.currentTimeMillis())
-                    .setTitle(viewModel.title.getValue())
-                    .setContent(viewModel.content.getValue())
-                    .build();
-            if (initReportId != 0) {
-                return viewModel.updateReport(newReport);
+        isValidInput()
+                .flatMapCompletable(isValid -> {
+                    Report newReport = Report.newBuilder()
+                            .setId(initReportId != 0 ? initReportId : System.currentTimeMillis())
+                            .setTitle(viewModel.title.getValue())
+                            .setContent(viewModel.content.getValue())
+                            .build();
+                    if (initReportId != 0) {
+                        return viewModel.updateReport(newReport);
 
-            } else {
-                return viewModel.addReport(newReport);
-            }
-        }).subscribeOn(Schedulers.io())
+                    } else {
+                        return viewModel.addReport(newReport);
+                    }
+                })
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(()->{
+                .subscribe(() -> {
                     Timber.d("sendAndSaveReport success");
                     onBackPressed();
                 }, this::errorHandle);
-
-
     }
 
     public Single<Boolean> isValidInput() {
