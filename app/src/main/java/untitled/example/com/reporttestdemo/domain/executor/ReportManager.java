@@ -5,6 +5,7 @@ import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 import io.reactivex.processors.PublishProcessor;
 import untitled.example.com.reporttestdemo.domain.repository.entity.Report;
 
@@ -81,12 +82,14 @@ public class ReportManager {
         });
     }
 
-    public Report getReportById(long id) {
-        for (Report report : reportList) {
-            if (report.getId() == id) {
-                return report;
+    public Single<Report> getReportById(long id) {
+        return Single.fromCallable(()->{
+            for (Report report : reportList) {
+                if (report.getId() == id) {
+                    return report;
+                }
             }
-        }
-        return Report.newBuilder().build();
+            return Report.newBuilder().build();
+        });
     }
 }
