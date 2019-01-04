@@ -33,8 +33,6 @@ public class MainActivity extends BaseActivity {
 
     @BindView(R.id.rv_report)
     RecyclerView rvReport;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
 
     Disposable disposable;
     ReportAdapter adapter;
