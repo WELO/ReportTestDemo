@@ -34,9 +34,6 @@ public class EditActivity extends BaseActivity {
     EditViewModel viewModel;
     long initReportId = 0;
 
-    @BindView(R.id.et_content)
-    EditText etContent;
-
     @SuppressLint("CheckResult")
     @Override
     protected void onCreate(Bundle savedInstanceState) {

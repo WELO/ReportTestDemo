@@ -35,7 +35,8 @@ public class EditViewModel extends ViewModel {
     }
 
     public Completable setInitReport(long id){
-        return reportRepository.getReportById(id).flatMapCompletable(report -> {
+        return reportRepository.getReportById(id)
+                .flatMapCompletable(report -> {
             Timber.d("Report = "+report.toString());
             title.postValue(report.getTitle());
             titleSelection.postValue(report.getTitle().length());
