@@ -22,11 +22,6 @@ import untitled.example.com.reporttestdemo.presentation.MainApplication;
         ActivityBuilderModule.class})
 public interface AppComponent {
 
-//    void inject(MainActivity activity);
-//
-//    void inject(EditActivity activity);
-
-    void inject(MainApplication application);
     @Component.Builder
     interface Builder {
         @BindsInstance
@@ -34,5 +29,6 @@ public interface AppComponent {
 
         AppComponent build();
     }
+    void inject(MainApplication application);
 
 }
