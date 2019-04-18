@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import untitled.example.com.reporttestdemo.domain.repository.ReportRepository;
@@ -20,6 +22,7 @@ public class MainViewModel extends ViewModel {
 
     private final ReportRepository reportRepository;
 
+    @Inject
     public MainViewModel(ReportRepository reportRepository) {
         this.reportRepository = reportRepository;
     }

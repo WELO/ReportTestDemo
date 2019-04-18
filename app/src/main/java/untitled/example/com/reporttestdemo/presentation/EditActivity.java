@@ -1,20 +1,21 @@
 package untitled.example.com.reporttestdemo.presentation;
 
+import com.android.databinding.library.baseAdapters.BR;
+
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import butterknife.BindView;
+import javax.inject.Inject;
+
 import butterknife.ButterKnife;
+import dagger.android.AndroidInjection;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -23,13 +24,14 @@ import untitled.example.com.reporttestdemo.R;
 import untitled.example.com.reporttestdemo.Utility.BaseActivity;
 import untitled.example.com.reporttestdemo.Utility.Define;
 import untitled.example.com.reporttestdemo.Utility.Utility;
-import untitled.example.com.reporttestdemo.databinding.ActivityEditBinding;
-import untitled.example.com.reporttestdemo.domain.repository.ReportDb;
+import untitled.example.com.reporttestdemo.Utility.ViewModelFactory;
 import untitled.example.com.reporttestdemo.domain.repository.entity.Report;
-import untitled.example.com.reporttestdemo.domain.repository.imp.ReportRepositoryImp;
 import untitled.example.com.reporttestdemo.exception.InvalidReportInputException;
 
 public class EditActivity extends BaseActivity {
+
+    @Inject
+    ViewModelFactory viewModelFactory;
 
     EditViewModel viewModel;
     long initReportId = 0;
@@ -38,17 +40,17 @@ public class EditActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityEditBinding binding = DataBindingUtil
+        ViewDataBinding binding = DataBindingUtil
                 .setContentView(this, R.layout.activity_edit);
         ButterKnife.bind(this, binding.getRoot());
-        viewModel = ViewModelProviders.of(this, new ViewModelProvider.Factory() {
-            @NonNull
-            @Override
-            public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-                return (T) new EditViewModel(new ReportRepositoryImp(ReportDb.getReportDao()));
-            }
-        }).get(EditViewModel.class);
-        binding.setEditViewModel(viewModel);
+
+        //DaggerAppComponent.builder().build().inject(this);
+
+        AndroidInjection.inject(this);
+
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(EditViewModel.class);
+
+        binding.setVariable(BR.editViewModel, viewModel);
         binding.setLifecycleOwner(this);
 
         if (getIntent() != null) {

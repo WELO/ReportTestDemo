@@ -16,7 +16,7 @@ public abstract class ReportDb extends RoomDatabase {
 
     public static void init(Context context) {
         if (instance == null) {
-            instance = Room.databaseBuilder(context.getApplicationContext(), ReportDb.class, "database")
+            instance = Room.databaseBuilder(context, ReportDb.class, "database")
                     .fallbackToDestructiveMigration()//當DB架構被更新時，刪除原有的資料
                     .build();
         }

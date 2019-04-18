@@ -1,22 +1,21 @@
 package untitled.example.com.reporttestdemo.presentation;
 
 import android.annotation.SuppressLint;
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.AndroidInjection;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -24,10 +23,9 @@ import timber.log.Timber;
 import untitled.example.com.reporttestdemo.R;
 import untitled.example.com.reporttestdemo.Utility.BaseActivity;
 import untitled.example.com.reporttestdemo.Utility.Define;
+import untitled.example.com.reporttestdemo.Utility.ViewModelFactory;
 import untitled.example.com.reporttestdemo.databinding.ActivityMainBinding;
-import untitled.example.com.reporttestdemo.domain.repository.ReportDb;
 import untitled.example.com.reporttestdemo.domain.repository.entity.Report;
-import untitled.example.com.reporttestdemo.domain.repository.imp.ReportRepositoryImp;
 
 public class MainActivity extends BaseActivity {
 
@@ -36,6 +34,10 @@ public class MainActivity extends BaseActivity {
 
     Disposable disposable;
     ReportAdapter adapter;
+
+    @Inject
+    ViewModelFactory viewModelFactory;
+
     MainViewModel viewModel;
 
     @Override
@@ -44,13 +46,10 @@ public class MainActivity extends BaseActivity {
         ActivityMainBinding binding = DataBindingUtil
                 .setContentView(this, R.layout.activity_main);
         ButterKnife.bind(this, binding.getRoot());
-        viewModel = ViewModelProviders.of(this, new ViewModelProvider.Factory() {
-            @NonNull
-            @Override
-            public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-                return (T) new MainViewModel(new ReportRepositoryImp(ReportDb.getReportDao()));
-            }
-        }).get(MainViewModel.class);
+
+        AndroidInjection.inject(this);
+
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel.class);
         binding.setMainViewModel(viewModel);
         binding.setLifecycleOwner(this);
 

@@ -3,6 +3,8 @@ package untitled.example.com.reporttestdemo.presentation;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
+import javax.inject.Inject;
+
 import io.reactivex.Completable;
 import timber.log.Timber;
 import untitled.example.com.reporttestdemo.domain.repository.ReportRepository;
@@ -20,6 +22,7 @@ public class EditViewModel extends ViewModel {
     public MutableLiveData<Integer> titleSelection = new MutableLiveData<>();
     public MutableLiveData<Integer> contentSelection = new MutableLiveData<>();
 
+    @Inject
     public EditViewModel(ReportRepository reportRepository) {
         this.reportRepository = reportRepository;
         titleSelection.setValue(0);
